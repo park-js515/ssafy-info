@@ -3,8 +3,8 @@ from sklearn.preprocessing import normalize
 from scipy.io import wavfile
 
 # 두 개의 .wav 파일 로드
-rate1, data1 = wavfile.read("녹음.wav")
-rate2, data2 = wavfile.read("녹음.wav")
+rate1, data1 = wavfile.read("sample-1-1.wav")
+rate2, data2 = wavfile.read("sample-1-2.wav")
 
 # 샘플 값들의 차이 계산
 data1 = data1.reshape(-1, 1)

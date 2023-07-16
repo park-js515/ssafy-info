@@ -17,15 +17,20 @@ rms1 = librosa.feature.rms(y=audio1)
 rms2 = librosa.feature.rms(y=audio2)
 
 # MFCC 비교 (Mel-frequency Cepstral Coefficients)
-mfcc_similarity = 1 - cdist(mfcc1.T, mfcc2.T, metric='cosine')
+mfcc_similarity = cdist(mfcc1.T, mfcc2.T, metric='cosine')
+
+# 대각선 아래의 삼각형 값들의 평균 계산
+triangular_values = mfcc_similarity[np.tril_indices_from(mfcc_similarity, k=-1)]
+average_similarity = np.mean(triangular_values)
+
 
 # RMS 비교 (Root Mean Square)
 rms_similarity = np.mean(rms1) - np.mean(rms2)
 
 # print(mfcc1.shape)
-print("MFCC Similarity:", mfcc_similarity)
+# print("MFCC Similarity:", mfcc_similarity)
+print("Average Similarity:", average_similarity)
 print("RMS Similarity:", rms_similarity)
-
 
 # plt.figure()
 # librosa.display.waveshow(y=audio1, sr=sr1, label='1', alpha=0.5)
