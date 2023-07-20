@@ -5,8 +5,8 @@ from sklearn.preprocessing import MinMaxScaler
 
 def compare_audio_time_domain(audio_file1, audio_file2):
     # 오디오 파일 로드
-    y1, sr1 = librosa.load(audio_file1, sr=None)
-    y2, sr2 = librosa.load(audio_file2, sr=None)
+    y1, sr1 = librosa.load(audio_file1, sr=16000)
+    y2, sr2 = librosa.load(audio_file2, sr=16000)
 
     # 두 오디오 파일의 길이를 맞춰줍니다.
     min_length = min(len(y1), len(y2))
@@ -48,10 +48,14 @@ def compare_audio_time_domain(audio_file1, audio_file2):
     return abs_mean_diff, squared_mean_diff
 
 if __name__ == "__main__":
-    audio_file1 = "아라_쏠.mp3"
-    audio_file2 = "하준_니암.mp3"
-
-    abs_diff, squared_diff = compare_audio_time_domain(audio_file1, audio_file2)
-    print("두 음성의 차이의 절대값의 평균:", abs_diff)
-    print("두 음성의 제곱합의 평균:", squared_diff)
+    arr = ("원본.mp3",)
     
+    for F in arr:
+        audio_file1 = "원본.mp3"
+        audio_file2 = F
+
+        print(F + ":와 원본의 비교")
+        abs_diff, squared_diff = compare_audio_time_domain(audio_file1, audio_file2)
+        print("두 음성의 차이의 절대값의 평균:", abs_diff)
+        print("두 음성의 제곱합의 평균:", squared_diff)
+        print()
