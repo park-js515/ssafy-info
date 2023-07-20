@@ -107,7 +107,7 @@ function App() {
 export default App;
 ```
 
-### useTabs
+### 3. useTabs
 
 ```js
 // App.js
@@ -156,6 +156,64 @@ function App() {
       ))}
 
       <div>{currentItem.content}</div>
+    </div>
+  );
+}
+
+export default App;
+```
+
+### 4. useEffect  
+- componentWillMount: 마운트되려고 할 때 (제거됨?)
+- componentDidMount: 마운트가 되었을 때
+- componentDidUpdate: 업데이트 되었을 때
+- componentWillUnmount: 언마운트 되었을 때
+
+```js
+useEffect(() => {
+  ...
+}, [hidden]);
+```
+- componentDidMount, componentDidUpdate
+- 첫 번째 렌더링, 업데이트 될 때마다 실행된다.  
+
+
+```js
+useEffect(() => {
+  console.log('hidden changed');
+  return () => {
+    console.log('hidden이 바뀔 예정입니다.');
+  }; // cleanUp: 컴포넌트가 제거될 때 수행
+}, [hidden]); 
+```
+- componentDidMount, componentDidUpdate, componentWillUnmount  
+
+> componentDidUpdate의 역할만 하고 싶다면?  
+- useRef라는 훅이 필요하다!
+- useEffect의 componentDidMount의 효과를 제거해야 하기에...
+
+
+### 5. useTitle
+
+```js
+import { useEffect, useState } from "react";
+
+const useTitle = (initialValue) => {
+  const [title, setTitle] = useState(initialValue);
+  const updateTitle = () => {
+    const htmlTitle = document.querySelector("title");
+    htmlTitle.innerText = title;
+  };
+  useEffect(updateTitle, [title]);
+  return setTitle;
+};
+
+function App() {
+  const titleUpdator = useTitle("Loading...");
+  setTimeout(() => titleUpdator("Home"), 5000);
+  return (
+    <div>
+      <div>Hi</div>
     </div>
   );
 }
