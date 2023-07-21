@@ -1,30 +1,30 @@
 # React 16.8v 부터는 Hook 을 조건문, 반복문, 중첩함수 내에서 호출할 수 없습니다.
 
-### useClick  
+### useClick
+
 1. `useRef`
-  - 기본적으로 우리의 component의 어떤 부분을 선택할 수 있는 방법(ex. document.getElementByID)  
-  - `.current`는 현재 원하는 DOM을 가리킨다.
+
+- 기본적으로 우리의 component의 어떤 부분을 선택할 수 있는 방법(ex. document.getElementByID)
+- `.current`는 현재 원하는 DOM을 가리킨다.
 
 ```js
 // App.js
 import { useEffect, useState, useRef } from "react";
 
-
-
 function App() {
-	const potato = useRef();
-	// setTimeout(() => potato.current?.focus(), 5000); // 옵셔널 체이닝: 마운트가 너무 빨리되면 에러가 생기기에
+  const potato = useRef();
+  // setTimeout(() => potato.current?.focus(), 5000); // 옵셔널 체이닝: 마운트가 너무 빨리되면 에러가 생기기에
 
   useEffect(() => {
     setTimeout(() => {
       potato.current.focus();
     }, 5000);
-  });// 마운트가 끝난 후 포커스하기
+  }); // 마운트가 끝난 후 포커스하기
 
   return (
     <div>
-			<div>Hi</div>
-			<input ref={potato} placeholder="la"/>
+      <div>Hi</div>
+      <input ref={potato} placeholder="la" />
     </div>
   );
 }
@@ -43,16 +43,18 @@ const useClick = (onClick) => {
     if (typeof onClick !== "function") {
       return; // 조건문이 훅 앞에 있으면 오류가 발생..
     }
-    if (element.current) { // mount
+    if (element.current) {
+      // mount
       element.current.addEventListener("click", onClick);
     }
     return () => {
-      if (element.current) { // componentWillUnmount
+      if (element.current) {
+        // componentWillUnmount
         element.current.removeEventListener("click", onClick);
       }
     };
   }, []);
-  return typeof onClick !== "function" ? undefined: element;
+  return typeof onClick !== "function" ? undefined : element;
 };
 
 function App() {
@@ -66,5 +68,4 @@ function App() {
 }
 
 export default App;
-
 ```
