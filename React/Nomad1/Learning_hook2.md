@@ -1,4 +1,6 @@
-# React 16.8v 부터는 Hook 을 조건문, 반복문, 중첩함수 내에서 호출할 수 없습니다.
+# React 16.8v 부터는 Hook 을 조건문, 반복문, 중첩함수 내에서 호출할 수 없습니다.  
+- 훅은 최상위에서만 선언되어야 한다.
+- 오직 React 함수 내에서만 Hook을 호출해야 한다.  
 
 ### useClick
 
@@ -69,3 +71,41 @@ function App() {
 
 export default App;
 ```
+
+### useConfirm
+
+```js
+export const useConfirm = (message = "", callback, rejection) => {
+  if (typeof callback !== "function" || typeof rejection !== "function") {
+    return;
+  }
+
+  const confirmAction = () => {
+    if (window.confirm(message)) {
+      callback();
+    } else {
+      rejection();
+    }
+  };
+
+  return confirmAction;
+};
+```
+
+### usePreventLeave
+
+```js
+export const usePreventLeave = () => {
+  const listener = (event) => {
+    event.preventDefault();
+    event.returnValue = "";
+  };
+  const enablePrevent = () => window.addEventListener("beforeunload", listener);
+  const disablePrevent = () => window.removeEventListener("beforeunload", listener);
+
+  return { enablePrevent, disablePrevent };
+};
+```
+
+
+###
