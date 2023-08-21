@@ -15,3 +15,5 @@ source venv/Script/activate
 pip install -r requirements.txt
 python manage.py runserver
 ```
+
+? 왜 name을 썼을까? -> url을 단축하기 위해서 ex)  `{% href articles:index %}`
